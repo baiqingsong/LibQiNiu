@@ -1,0 +1,3 @@
+rootProject.name = "LibQiNiu"
+include ':app'
+include ':qiniu'
