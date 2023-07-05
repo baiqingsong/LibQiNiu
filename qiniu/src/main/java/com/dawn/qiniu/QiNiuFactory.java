@@ -3,22 +3,35 @@ package com.dawn.qiniu;
 import android.graphics.Bitmap;
 
 import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UploadManager;
 import com.qiniu.android.storage.UploadOptions;
 
 public class QiNiuFactory {
     //单例模式
     private static QiNiuFactory instance;
-    private QiNiuFactory(String access, String secret, String bucket, String host){
+    private UploadManager uploadManager;
+    private QiNiuFactory(String access, String secret, String bucket, String host, QiNiuManager.CustomZone customZone){
         this.access = access;
         this.secret = secret;
         this.bucket = bucket;
         this.host = host;
+        uploadManager = QiNiuManager.getSingleton(customZone);
+    }
+    public static QiNiuFactory getInstance(String access, String secret, String bucket, String host, QiNiuManager.CustomZone customZone){
+        if(instance == null){
+            synchronized (QiNiuFactory.class){
+                if(instance == null){
+                    instance = new QiNiuFactory(access, secret, bucket, host, customZone);
+                }
+            }
+        }
+        return instance;
     }
     public static QiNiuFactory getInstance(String access, String secret, String bucket, String host){
         if(instance == null){
             synchronized (QiNiuFactory.class){
                 if(instance == null){
-                    instance = new QiNiuFactory(access, secret, bucket, host);
+                    instance = new QiNiuFactory(access, secret, bucket, host, QiNiuManager.CustomZone.ZONE_HUA_DONG);
                 }
             }
         }
@@ -103,7 +116,7 @@ public class QiNiuFactory {
                 @Override
                 public void run() {
                     super.run();
-                    QiNiuManager.getSingleton().put(data, upKey, token, upCompletionHandler, uploadOptions);
+                    uploadManager.put(data, upKey, token, upCompletionHandler, uploadOptions);
                 }
             }.start();
         } catch (Exception e) {
