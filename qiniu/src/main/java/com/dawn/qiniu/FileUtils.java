@@ -4,7 +4,7 @@ import java.io.Closeable;
 import java.io.File;
 import java.io.RandomAccessFile;
 
-public class FileUtils {
+class FileUtils {
 
     public static byte[] readFile(String filePath) {
         if(filePath == null || !new File(filePath).exists()) return null;

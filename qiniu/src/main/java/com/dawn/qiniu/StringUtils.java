@@ -9,7 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.nio.charset.Charset;
 import java.util.Collection;
 
-public class StringUtils {
+class StringUtils {
     private StringUtils() {
     }
 

@@ -10,14 +10,14 @@ public class QiNiuFactory {
     //单例模式
     private static QiNiuFactory instance;
     private UploadManager uploadManager;
-    private QiNiuFactory(String access, String secret, String bucket, String host, QiNiuManager.CustomZone customZone){
+    private QiNiuFactory(String access, String secret, String bucket, String host, CustomZone customZone){
         this.access = access;
         this.secret = secret;
         this.bucket = bucket;
         this.host = host;
         uploadManager = QiNiuManager.getSingleton(customZone);
     }
-    public static QiNiuFactory getInstance(String access, String secret, String bucket, String host, QiNiuManager.CustomZone customZone){
+    public static QiNiuFactory getInstance(String access, String secret, String bucket, String host, CustomZone customZone){
         if(instance == null){
             synchronized (QiNiuFactory.class){
                 if(instance == null){
@@ -31,7 +31,7 @@ public class QiNiuFactory {
         if(instance == null){
             synchronized (QiNiuFactory.class){
                 if(instance == null){
-                    instance = new QiNiuFactory(access, secret, bucket, host, QiNiuManager.CustomZone.ZONE_HUA_DONG);
+                    instance = new QiNiuFactory(access, secret, bucket, host, CustomZone.ZONE_HUA_DONG);
                 }
             }
         }

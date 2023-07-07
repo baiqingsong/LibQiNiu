@@ -8,7 +8,7 @@ import com.qiniu.android.storage.UploadManager;
 /**
  * 初始化七牛管理器
  */
-public class QiNiuManager {
+class QiNiuManager {
     private static UploadManager instance;
 
     //私有构造
@@ -18,12 +18,6 @@ public class QiNiuManager {
     //获取UploadManager
     public static UploadManager getSingleton() {
         return getSingleton(CustomZone.ZONE_HUA_DONG);
-    }
-
-    public enum CustomZone {
-        ZONE_HUA_DONG,//华东
-        ZONE_HUA_BEI,//华北
-        ZONE_HUA_NAN,//华南
     }
 
     /**
