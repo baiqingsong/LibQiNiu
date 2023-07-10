@@ -7,6 +7,8 @@ import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
 import com.qiniu.android.storage.UploadOptions;
 
+import java.io.File;
+
 public class QiNiuFactory {
     //单例模式
     private static QiNiuFactory instance;
@@ -72,7 +74,20 @@ public class QiNiuFactory {
      * @param listener 上传监听
      */
     public void uploadFile(String fileName, String key, QiNiuUploadListener listener){
-        uploadFile(FileUtils.readFile(fileName), key, listener);
+        uploadFile(null, fileName, key, listener);
+    }
+
+    /**
+     * 文件上传
+     * @param token 七牛云token值
+     * @param fileName 文件名称
+     * @param key 七牛云上传路径，包括文件夹和文件名称
+     * @param listener 上传监听
+     */
+    public void uploadFile(String token, String fileName, String key, QiNiuUploadListener listener){
+        if(TextUtils.isEmpty(fileName) || !new File(fileName).exists())
+            return;
+        uploadFile(token, FileUtils.readFile(fileName), key, listener);
     }
 
     /**
@@ -82,12 +97,23 @@ public class QiNiuFactory {
      * @param listener 上传监听
      */
     public void uploadImage(Bitmap bitmap, String key, QiNiuUploadListener listener){
+        uploadImage(null, bitmap, key, listener);
+    }
+
+    /**
+     * 图片上传
+     * @param token 七牛云token值
+     * @param bitmap 图片
+     * @param key 七牛云上传路径，包括文件夹和文件名称
+     * @param listener 上传监听
+     */
+    public void uploadImage(String token, Bitmap bitmap, String key, QiNiuUploadListener listener){
         if(bitmap == null){
             if(listener != null)
                 listener.uploadFail();
             return;
         }
-        uploadFile(StringUtils.Bitmap2Bytes(bitmap), key, listener);
+        uploadFile(token, StringUtils.Bitmap2Bytes(bitmap), key, listener);
     }
 
     /**
