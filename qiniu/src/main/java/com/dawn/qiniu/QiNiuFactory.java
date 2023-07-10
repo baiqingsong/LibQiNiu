@@ -1,6 +1,7 @@
 package com.dawn.qiniu;
 
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
@@ -96,6 +97,17 @@ public class QiNiuFactory {
      * @param listener 上传监听
      */
     public void uploadFile(byte[] data, String upKey, QiNiuUploadListener listener) {
+        uploadFile(null, data, upKey, listener);
+    }
+
+    /**
+     * 文件上传
+     * @param token 七牛云token值
+     * @param data 文件数据
+     * @param upKey 七牛云上传路径，包括文件夹和文件名称
+     * @param listener 上传监听
+     */
+    public void uploadFile(String token, byte[] data, String upKey, QiNiuUploadListener listener){
         //定义数据上传结束后的处理动作
         final UpCompletionHandler upCompletionHandler = (key, info, response) -> {
             if (info.isOK()) {
@@ -111,12 +123,15 @@ public class QiNiuFactory {
                 listener.uploadPercent((float) percent);
         }, () -> false);
         try {
-            String token = checkUpToken();
+            if(TextUtils.isEmpty(token)){
+                token = checkUpToken();
+            }
+            final String finalToken = token;
             new Thread(){
                 @Override
                 public void run() {
                     super.run();
-                    uploadManager.put(data, upKey, token, upCompletionHandler, uploadOptions);
+                    uploadManager.put(data, upKey, finalToken, upCompletionHandler, uploadOptions);
                 }
             }.start();
         } catch (Exception e) {
