@@ -29,10 +29,10 @@ public class MainActivity extends AppCompatActivity {
             qiniuUploadImage(bitmap);
         });
     }
-    public static final String ACCESS = "TQDYZzqgQb67YutzKCrdsfrNeXTUvuNx_myKKyu1";
-    public static final String SECRET = "Puc0u7gQea_TeSGW-LP5MpIopksBvHXR7FLqzoqb";
-    public static final String BUCKET = "hudong-jargee";//区域
-    public static final String PHOTO_HOST = "http://hudong.jargee.cn/";
+    public static final String ACCESS = "";
+    public static final String SECRET = "";
+    public static final String BUCKET = "";//区域
+    public static final String PHOTO_HOST = "";
     QiNiuFactory qiNiuFactory;
     private void qiniuInit(){
         qiNiuFactory = QiNiuFactory.getInstance(ACCESS, SECRET, BUCKET, PHOTO_HOST);
