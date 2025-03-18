@@ -141,7 +141,7 @@ public class QiNiuFactory {
                     listener.uploadSuccess(host + key);
             }else{
                 if(listener != null)
-                    listener.uploadFail();
+                    listener.uploadFail(host + key);
             }
         };
         final UploadOptions uploadOptions = new UploadOptions(null, null, false, (key, percent) -> {
@@ -168,7 +168,7 @@ public class QiNiuFactory {
     public interface QiNiuUploadListener{
         void uploadPercent(float percent);
         void uploadSuccess(String url);
-        void uploadFail();
+        void uploadFail(String url);
     }
 
 }
