@@ -110,7 +110,7 @@ public class QiNiuFactory {
     public void uploadImage(String token, Bitmap bitmap, String key, QiNiuUploadListener listener){
         if(bitmap == null){
             if(listener != null)
-                listener.uploadFail();
+                listener.uploadFail(key);
             return;
         }
         uploadFile(token, StringUtils.Bitmap2Bytes(bitmap), key, listener);
